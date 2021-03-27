@@ -32,17 +32,13 @@ namespace YtMultimediaLibrary {
         /// </summary>
         /// <param name="channelUrl">url to a channel</param>
         /// <returns>channel id</returns>
-        public string ChannelIdByChannelUrl(string channelUrl) {
-            var result = String.Empty;
-            Uri channelUri = new Uri(channelUrl);
+        public static string ChannelIdByChannelUrl(string channelUrl) {
+            var result = string.Empty;
+            var channelUri = new Uri(channelUrl);
             var segments = channelUri.Segments;
 
             if (segments.Length > 2) {
                 result = segments.Last();
-                //if (result.Length > 2) {
-                //var sb = new StringBuilder(result) { [1] = 'U' };
-                //result = sb.ToString();
-                //}
             }
 
             return result;

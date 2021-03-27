@@ -20,8 +20,8 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("testtest");
-            var id = yt.ChannelIdByChannelUrl("https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA");
+            var yt = new YoutubeAPIClient("api-key-here");
+            var id = YoutubeAPIClient.ChannelIdByChannelUrl("https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA");
             var videos = yt.ChannelLastVideos(id, 5);
 
             foreach (var video in videos) {
