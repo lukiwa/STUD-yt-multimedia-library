@@ -22,7 +22,7 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("....");
+            var yt = new YoutubeAPIClient("...");
             var id = YoutubeAPIClient.ChannelIdByChannelUrl("https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA");
             var videos = yt.ChannelLastVideos(id, 5);
 
