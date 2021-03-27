@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Net;
 
-using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
-using Google.Apis.Upload;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using System.Web;
@@ -64,6 +58,17 @@ namespace YtMultimediaLibrary {
 
 
             return result;
+        }
+
+        /// <summary>
+        /// Saves video thumbnail (photo) to a given file
+        /// </summary>
+        /// <param name="filepath">Full path to file where a thumbnail should be saved</param>
+        /// <param name="video">Single file in form of a SearchResult</param>
+        public static void SaveVideoThumbnailToFile(string filepath, SearchResult video) {
+            WebClient cli = new WebClient();
+            var imgBytes = cli.DownloadData(video.Snippet.Thumbnails.Default__.Url);
+            File.WriteAllBytes(filepath, imgBytes);
         }
 
 
