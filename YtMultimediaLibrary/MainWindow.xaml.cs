@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +22,18 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            var yt = new YoutubeAPIClient("...");
+            var id = YoutubeAPIClient.ChannelIdByChannelUrl("https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA");
+            var videos = yt.ChannelLastVideos(id, 5);
+
+            foreach (var video in videos) {
+                MessageBox.Show(video.Snippet.Title);
+                YoutubeAPIClient.SaveVideoThumbnailToFile(@".test.jpg", video);
+            }
+
+
+
+
         }
     }
 }
