@@ -9,6 +9,11 @@ namespace YtMultimediaLibrary.Entities
 {
     public class User
     {
+        public User()
+        {
+            Channels = new List<Channel>();
+        }
+
         [Key]
         public int UserId { get; set; }
 
