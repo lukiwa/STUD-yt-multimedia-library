@@ -14,8 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Google.Apis.YouTube.v3.Data;
 using YtMultimediaLibrary.Contexts;
 using YtMultimediaLibrary.Entities;
+using Channel = Google.Apis.YouTube.v3.Data.Channel;
 
 namespace YtMultimediaLibrary {
     /// <summary>
@@ -24,7 +26,7 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("AIzaSyBobUsCLkr6VrbhcwaJPWPhE5X_iuqG7j4");
+            var yt = new YoutubeAPIClient("AIzaSyDueuiy9SlXlD0gMaEIlbODf345tRmaVK0");
             var dbContext = new DataBaseContext();
 
             var manager = new UserManager(yt, dbContext);
@@ -33,27 +35,31 @@ namespace YtMultimediaLibrary {
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA", false);
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UC7_tK6JLTJDYPzHR76o85vQ", false);
             
-            
-            var videos = yt.ChannelListLastVideos(user.Channels, 5);
-            foreach (var video in videos) {
-                MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
-            }
-            
-
-            /*
-            foreach (var channel in user.Channels)
-            {
-                MessageBox.Show(channel.ChannelName);
+           
+           var channelAndVideos = new Dictionary<Entities.Channel, List<SearchResult>>();
+           
+           foreach (var channel in user.Channels) {
                 var videos = yt.ChannelLastVideos(channel, 5);
+                channelAndVideos.Add(channel, videos);
+           }
+           ChannelsAndVideos.ItemsSource = channelAndVideos;
 
-                foreach (var video in videos) { 
-                    MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
-                }
+           /*
+           For displaying as message box
+           foreach (var entry in channelAndVideos) {
+               MessageBox.Show(entry.Key.ChannelName);
+               foreach (var video in entry.Value) {
+                   MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
+               }
             }
-            */
-            
-
-
+           */
+           /*
+           For displaying last N videos as message box
+           var videos = yt.ChannelListLastVideos(user.Channels, 5);
+           foreach (var video in videos) {
+               MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
+           }
+           */
 
 
 
