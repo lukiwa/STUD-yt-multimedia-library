@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Mapping;
 using System.Linq;
+using System.Security.Authentication;
 using YtMultimediaLibrary.Contexts;
 using YtMultimediaLibrary.Entities;
 
@@ -13,20 +16,46 @@ namespace YtMultimediaLibrary {
             _dbContext = dbContext;
         }
 
-        //TODO
-        public User Register() {
+        /// <summary>
+        /// Registering new user in database
+        /// </summary>
+        /// <param name="userName">Nickname of the user</param>
+        /// <param name="email">Email of the user</param>
+        /// <param name="password">Password of the user</param>
+        /// <returns>Returns newly created user</returns>
+        public User Register(string userName, string email, string password) {
             var user = _dbContext.Users.Create();
-            user.UserName = "TestUser";
-            user.EMail = "test@test.test";
-            user.PasswordHashed = "PasswordHashed";
-            _dbContext.Users.Add(user);
+            user.UserName = userName;
+            user.EMail = email;
+            user.PasswordHashed = password;
 
+            if (_dbContext.Users.Any(o => o.UserName == user.UserName || o.EMail == user.EMail))
+            {
+                throw new AuthenticationException("User already exists!");
+            }
+
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
             return user;
         }
 
-        //TODO
-        public User Login() {
-            return new User();
+        /// <summary>
+        /// Logins to account
+        /// </summary>
+        /// <param name="email">Email of the userr</param>
+        /// <param name="password">password of the user</param>
+        /// <returns>User of this session</returns>
+        public User Login(string email, string password)
+        {
+            var currentUser = _dbContext.Users.FirstOrDefault(user => user.EMail == email && user.PasswordHashed == password);
+
+            if (currentUser == null)
+            {
+                throw new AuthenticationException("User not found in database!");
+            }
+
+            return currentUser;
+
         }
 
         /// <summary>
