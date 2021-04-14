@@ -28,19 +28,19 @@ namespace YtMultimediaLibrary {
             var dbContext = new DataBaseContext();
 
             var manager = new UserManager(yt, dbContext);
-            var user = manager.Register();
+            var user = manager.Login("test", "test");
 
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA", false);
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UC7_tK6JLTJDYPzHR76o85vQ", false);
             
-            
+           /* 
             var videos = yt.ChannelListLastVideos(user.Channels, 5);
             foreach (var video in videos) {
                 MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
             }
-            
+            */
 
-            /*
+            
             foreach (var channel in user.Channels)
             {
                 MessageBox.Show(channel.ChannelName);
@@ -50,7 +50,7 @@ namespace YtMultimediaLibrary {
                     MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
                 }
             }
-            */
+            
             
 
 
