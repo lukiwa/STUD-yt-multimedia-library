@@ -10,6 +10,7 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using System.Web;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 using YtMultimediaLibrary.Contexts;
 using YtMultimediaLibrary.Entities;
 using ChannelEntity = YtMultimediaLibrary.Entities.Channel;
@@ -67,9 +68,7 @@ namespace YtMultimediaLibrary {
         /// <param name="channel">Channel</param>
         /// <param name="lastVideos">How many last videos should be listed</param>
         /// <returns>Last N videos</returns>
-        public List<SearchResult> ChannelLastVideos(ChannelEntity channel, int lastVideos) {
-            var result = new List<SearchResult>();
-
+        public List<Video> ChannelLastVideos(ChannelEntity channel, int lastVideos) {
             var searchListRequest = _service.Search.List("snippet");
             searchListRequest.MaxResults = lastVideos;
             searchListRequest.ChannelId = ChannelIdByChannelUrl(channel.Link);
@@ -77,10 +76,9 @@ namespace YtMultimediaLibrary {
             searchListRequest.Order = SearchResource.ListRequest.OrderEnum.Date;
 
             var searchListResponse = searchListRequest.Execute();
-            result.AddRange(searchListResponse.Items);
 
 
-            return result;
+            return searchListResponse.Items.Select(response => new Video {YtApiResult = response}).ToList();
         }
 
         /// <summary>
@@ -89,8 +87,8 @@ namespace YtMultimediaLibrary {
         /// <param name="channels">List of user channels</param>
         /// <param name="lastVideos">Number of last N videos</param>
         /// <returns>List of last videos</returns>
-        public List<SearchResult> ChannelListLastVideos(List<ChannelEntity> channels, int lastVideos) {
-            var result = new List<SearchResult>();
+        public List<Video> ChannelListLastVideos(List<ChannelEntity> channels, int lastVideos) {
+            var result = new List<Video>();
 
             foreach (var channel in channels) {
                 var searchListRequest = _service.Search.List("snippet");
@@ -100,10 +98,11 @@ namespace YtMultimediaLibrary {
                 searchListRequest.Order = SearchResource.ListRequest.OrderEnum.Date;
 
                 var searchListResponse = searchListRequest.Execute();
-                result.AddRange(searchListResponse.Items);
+
+                result.AddRange(searchListResponse.Items.Select(response => new Video {YtApiResult = response}));
             }
 
-            return result.OrderBy(video => video.Snippet.PublishedAt).Take(lastVideos).ToList();
+            return result.OrderBy(video => video.PublishedAt).Take(lastVideos).ToList();
 
         }
 
@@ -115,7 +114,7 @@ namespace YtMultimediaLibrary {
         /// <param name="filepath">Full path to file where a thumbnail should be saved</param>
         /// <param name="video">Single file in form of a SearchResult</param>
         public static void SaveVideoThumbnailToFile(string filepath, SearchResult video) {
-            WebClient cli = new WebClient();
+            var cli = new WebClient();
             var imgBytes = cli.DownloadData(video.Snippet.Thumbnails.Default__.Url);
             File.WriteAllBytes(filepath, imgBytes);
         }

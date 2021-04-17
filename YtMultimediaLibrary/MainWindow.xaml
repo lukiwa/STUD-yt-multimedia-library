@@ -10,26 +10,94 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
+
+
         <ListView Name="ChannelsAndVideos" Margin="10">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
                         <TextBlock FontWeight="Bold" Text="{Binding Key.ChannelName}" />
 
-                        <ListView Name="ChannelsAndVideos" ItemsSource="{Binding Value}">
+                        <ListView
+                            x:Name="Videos"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            ItemsSource="{Binding Value}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Columns="5" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding Snippet.Title}" />
-                                    </WrapPanel>
+                                    <StackPanel
+                                        Width="300"
+                                        Height="170"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Vertical">
+
+                                        <Button
+                                            x:Name="VideoClickable"
+                                            Width="150"
+                                            Height="120"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Click="VideoClickable_Click"
+                                            CommandParameter="{Binding Id}"
+                                            Focusable="True">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="{Binding Image}" />
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <TextBlock
+                                            Width="auto"
+                                            Height="auto"
+                                            MaxWidth="150"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="11"
+                                            Text="{Binding Title}"
+                                            TextWrapping="Wrap" />
+
+
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+
 
                     </WrapPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </Grid>
