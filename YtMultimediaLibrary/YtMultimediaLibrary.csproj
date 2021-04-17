@@ -88,6 +88,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="UserManager.cs" />
+    <Compile Include="Video.cs" />
     <Compile Include="YoutubeAPIClient.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

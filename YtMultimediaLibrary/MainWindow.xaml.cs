@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,20 +27,22 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("AIzaSyDueuiy9SlXlD0gMaEIlbODf345tRmaVK0");
+            var yt = new YoutubeAPIClient("API KEY");
             var dbContext = new DataBaseContext();
 
             var manager = new UserManager(yt, dbContext);
-            var user = manager.Register();
+            var user = manager.Login("test", "test");
 
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA", false);
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UC7_tK6JLTJDYPzHR76o85vQ", false);
             
            
-           var channelAndVideos = new Dictionary<Entities.Channel, List<SearchResult>>();
+           var channelAndVideos = new Dictionary<Entities.Channel, List<Video>>();
            
            foreach (var channel in user.Channels) {
                 var videos = yt.ChannelLastVideos(channel, 5);
+                //ImageSource img = yt.Foo(videos.First());
+                //imgDynamic.Source = img;
                 channelAndVideos.Add(channel, videos);
            }
            ChannelsAndVideos.ItemsSource = channelAndVideos;
@@ -61,11 +64,14 @@ namespace YtMultimediaLibrary {
            }
            */
 
-
-
-
-
-
+        }
+        private void VideoClickable_Click(object sender, RoutedEventArgs e) {
+           
+            var myButton = (Button)sender;
+            var id = myButton.CommandParameter.ToString();
+            var url = "https://www.youtube.com/watch?v=" + id;
+            Process.Start(url);
+           
         }
     }
 }
