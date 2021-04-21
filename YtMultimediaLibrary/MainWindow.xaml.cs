@@ -27,11 +27,11 @@ namespace YtMultimediaLibrary {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("API KEY");
+            var yt = new YoutubeAPIClient("key");
             var dbContext = new DataBaseContext();
 
             var manager = new UserManager(yt, dbContext);
-            var user = manager.Login("test", "test");
+            var user = manager.Login("test@gmail.com", "test");
 
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA", false);
             manager.AddUserChannel(user, "https://www.youtube.com/channel/UC7_tK6JLTJDYPzHR76o85vQ", false);
