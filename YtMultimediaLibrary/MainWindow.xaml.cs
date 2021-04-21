@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using Google.Apis.YouTube.v3.Data;
 using YtMultimediaLibrary.Contexts;
 using YtMultimediaLibrary.Entities;
+using YtMultimediaLibrary.UserViews;
 using Channel = Google.Apis.YouTube.v3.Data.Channel;
 
 namespace YtMultimediaLibrary {
@@ -25,6 +26,10 @@ namespace YtMultimediaLibrary {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+
+        LoginWindow loginWindow = new LoginWindow();
+        RegisterWindow registerWindow = new RegisterWindow();
+
         public MainWindow() {
             InitializeComponent();
             var yt = new YoutubeAPIClient("key");
@@ -72,6 +77,16 @@ namespace YtMultimediaLibrary {
             var url = "https://www.youtube.com/watch?v=" + id;
             Process.Start(url);
            
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            loginWindow.Show();
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            registerWindow.Show();
         }
     }
 }
