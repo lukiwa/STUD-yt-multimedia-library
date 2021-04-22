@@ -22,5 +22,16 @@ namespace YtMultimediaLibrary.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-OOIRU68\\SZYMONSQL;Initial Catalog=YtMultimediaLibrary;Integra" +
+            "ted Security=True")]
+        public string YtMultimediaLibraryConnectionString {
+            get {
+                return ((string)(this["YtMultimediaLibraryConnectionString"]));
+            }
+        }
     }
 }
