@@ -25,53 +25,48 @@ namespace YtMultimediaLibrary {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public MainWindow() {
+
+        static readonly YoutubeAPIClient yt = new YoutubeAPIClient("key");
+        static readonly DataBaseContext dbContext = new DataBaseContext();
+        static readonly UserManager manager = new UserManager(yt, dbContext);
+
+        public MainWindow()
+        {
             InitializeComponent();
-            var yt = new YoutubeAPIClient("API KEY");
-            var dbContext = new DataBaseContext();
 
-            var manager = new UserManager(yt, dbContext);
-            var user = manager.Login("test", "test");
+        }
+        
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
 
-            manager.AddUserChannel(user, "https://www.youtube.com/channel/UCSwtGkvmxXhWe-kK1dlm8gA", false);
-            manager.AddUserChannel(user, "https://www.youtube.com/channel/UC7_tK6JLTJDYPzHR76o85vQ", false);
-            
-           
-           var channelAndVideos = new Dictionary<Entities.Channel, List<Video>>();
-           
-           foreach (var channel in user.Channels) {
-                var videos = yt.ChannelLastVideos(channel, 5);
-                //ImageSource img = yt.Foo(videos.First());
-                //imgDynamic.Source = img;
-                channelAndVideos.Add(channel, videos);
-           }
-           ChannelsAndVideos.ItemsSource = channelAndVideos;
 
-           /*
-           For displaying as message box
-           foreach (var entry in channelAndVideos) {
-               MessageBox.Show(entry.Key.ChannelName);
-               foreach (var video in entry.Value) {
-                   MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
-               }
+            string email = emailTextBox.Text;
+            string password = passwordTextBox.Text;
+
+            var user = manager.Login(email, password);
+
+            ServiceWindow serviceWindow = new ServiceWindow(user, manager, yt, dbContext);
+            Close();
+            serviceWindow.Show();
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            string name = nameTextBox.Text;
+            string email = newEmailTextBox.Text;
+            string password = newPasswordTextBox.Text;
+            string confirmedPassword = confirmPasswordTextBox.Text;
+
+            if (password == confirmedPassword)
+            {
+                manager.Register(name, email, confirmedPassword);
+                MessageBox.Show("You have account now and you can log in");
             }
-           */
-           /*
-           For displaying last N videos as message box
-           var videos = yt.ChannelListLastVideos(user.Channels, 5);
-           foreach (var video in videos) {
-               MessageBox.Show(video.Snippet.ChannelTitle + "\n" + video.Snippet.Title);
-           }
-           */
+            else
+                MessageBox.Show("Passwords are not the same!");
 
         }
-        private void VideoClickable_Click(object sender, RoutedEventArgs e) {
-           
-            var myButton = (Button)sender;
-            var id = myButton.CommandParameter.ToString();
-            var url = "https://www.youtube.com/watch?v=" + id;
-            Process.Start(url);
-           
-        }
+
+
     }
 }

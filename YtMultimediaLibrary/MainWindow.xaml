@@ -7,98 +7,96 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="800"
-    Height="450"
+    Height="681.918"
     mc:Ignorable="d">
     <Grid>
+        <!-- Sign In things-->
+        <TextBox 
+            x:Name="emailTextBox"
+            HorizontalAlignment="Left" 
+            Height="25" Margin="280,83,0,0" 
+            TextWrapping="Wrap" Text="E-mail" 
+            VerticalAlignment="Top" 
+            Width="199"
+            />
+        <TextBox 
+            x:Name="passwordTextBox"
+            HorizontalAlignment="Left" 
+            Height="24" Margin="280,147,0,0" 
+            TextWrapping="Wrap" 
+            Text="Password" 
+            VerticalAlignment="Top" 
+            Width="199"
+            />
+        <Button 
+            Style="{StaticResource RoundBlueButtonTemplate}"
+            Click="Login_Click"
+            Content="Sign In" 
+            HorizontalAlignment="Left" 
+            Margin="308,194,0,0" 
+            VerticalAlignment="Top" 
+            Width="142" 
+            Height="47"/>
 
-
-        <ListView Name="ChannelsAndVideos" Margin="10">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel Orientation="Vertical">
-                        <TextBlock FontWeight="Bold" Text="{Binding Key.ChannelName}" />
-
-                        <ListView
-                            x:Name="Videos"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top"
-                            ItemsSource="{Binding Value}">
-
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Columns="5" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel
-                                        Width="300"
-                                        Height="170"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Bottom"
-                                        Orientation="Vertical">
-
-                                        <Button
-                                            x:Name="VideoClickable"
-                                            Width="150"
-                                            Height="120"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Top"
-                                            Click="VideoClickable_Click"
-                                            CommandParameter="{Binding Id}"
-                                            Focusable="True">
-                                            <Button.Template>
-                                                <ControlTemplate>
-                                                    <Image Source="{Binding Image}" />
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                        <TextBlock
-                                            Width="auto"
-                                            Height="auto"
-                                            MaxWidth="150"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Bottom"
-                                            FontSize="11"
-                                            Text="{Binding Title}"
-                                            TextWrapping="Wrap" />
-
-
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
-
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- Sign Up things-->
+        <Button 
+            x:Name="signUpButton"
+            Style="{StaticResource RoundBlueButtonTemplate}"
+            Content="Sign Up" 
+            HorizontalAlignment="Left" 
+            Margin="309,546,0,0" 
+            VerticalAlignment="Top" 
+            Click="Register_Click"
+            Width="136" RenderTransformOrigin="0.5,0.5" Height="52"
+            >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.065"/>
+                    <RotateTransform Angle="-0.14"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <TextBox 
+            x:Name="nameTextBox"
+            HorizontalAlignment="Left" 
+            Height="25" Margin="280,353,0,0" 
+            TextWrapping="Wrap" 
+            Text="Name" 
+            VerticalAlignment="Top" 
+            Width="199" MaxLength="5"
+            />
+        <TextBox 
+            x:Name="newEmailTextBox"
+            HorizontalAlignment="Left" 
+            Height="25" 
+            Margin="280,403,0,0" 
+            TextWrapping="Wrap" 
+            Text="E-Mail" 
+            VerticalAlignment="Top" 
+            Width="199"/>
+        <TextBox 
+            x:Name="newPasswordTextBox"
+            HorizontalAlignment="Left" 
+            Height="25" 
+            Margin="280,454,0,0" 
+            TextWrapping="Wrap" 
+            Text="Password" 
+            VerticalAlignment="Top" 
+            Width="199"
+            />
+        <TextBox 
+            x:Name="confirmPasswordTextBox"
+            HorizontalAlignment="Left" 
+            Height="25" 
+            Margin="280,503,0,0" 
+            TextWrapping="Wrap" 
+            Text="Confirm Password" 
+            VerticalAlignment="Top" 
+            Width="199"
+            />
+        <Label Content="Sign in to see your upcoming videos!" HorizontalAlignment="Left" Margin="194,19,0,0" VerticalAlignment="Top" Height="45" Width="405" FontSize="22"/>
+        <Label Content="Don't have an account? Sign Up for free!" HorizontalAlignment="Left" Margin="194,293,0,0" VerticalAlignment="Top" Height="45" Width="405" FontSize="22"/>
     </Grid>
 </Window>

@@ -8,8 +8,8 @@ using YtMultimediaLibrary.Entities;
 
 namespace YtMultimediaLibrary {
     public class UserManager {
-        private YoutubeAPIClient _yt;
-        private DataBaseContext _dbContext;
+        private readonly YoutubeAPIClient _yt;
+        private readonly DataBaseContext _dbContext;
 
         public UserManager(YoutubeAPIClient yt, DataBaseContext dbContext) {
             _yt = yt;
