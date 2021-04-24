@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YtMultimediaLibrary"
         mc:Ignorable="d"
-        Title="ServiceWindow" Height="632" Width="800">
+        Title="ServiceWindow" Height="632" Width="893">
     <Grid>
-        <ListView Name="lista" Margin="10,223,10,10">
+        <ListView Name="lista" Margin="10,264,10,10">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
@@ -71,12 +71,26 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBox x:Name="ChannelUrlTextBox" HorizontalAlignment="Left" Height="22" Margin="66,78,0,0" TextWrapping="Wrap" Text="ChannelURL" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="AddChannelButton" Content="Add" HorizontalAlignment="Left" Margin="66,138,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="AddChannelButton_Click"/>
-        <TextBox x:Name="ChannelNameTextBox" HorizontalAlignment="Left" Height="23" Margin="66,35,0,0" TextWrapping="Wrap" Text="Channel Name" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="DeleteChannelButton" Content="Delete" HorizontalAlignment="Left" Margin="208,138,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="DeleteChannelButton_Click"/>
-        <TextBox x:Name="ChannelId" HorizontalAlignment="Left" Height="22" Margin="208,78,0,0" TextWrapping="Wrap" Text="Id" VerticalAlignment="Top" Width="100"/>
-        <DataGrid x:Name="ChannelGrid" HorizontalAlignment="Left" Height="133" Margin="361,35,0,0" VerticalAlignment="Top" Width="387" SelectionChanged="DataGrid_SelectionChanged" ItemsSource="{Binding}"/>
-        <Grid HorizontalAlignment="Left" Height="100" Margin="409,173,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="ChannelUrlTextBox" HorizontalAlignment="Left" Height="22" Margin="34,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="AddChannelButton" Style="{StaticResource RoundGreenButtonTemplate}" Content="Add" HorizontalAlignment="Left" Margin="34,202,0,0" VerticalAlignment="Top" Width="100" Height="42" Click="AddChannelButton_Click"/>
+        <TextBox x:Name="ChannelNameTextBox" HorizontalAlignment="Left" Height="23" Margin="34,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="DeleteChannelButton" Style="{StaticResource RoundRedButtonTemplate}" Content="Delete" HorizontalAlignment="Left" Margin="296,202,0,0" VerticalAlignment="Top" Width="100" Height="42" Click="DeleteChannelButton_Click"/>
+        <TextBox x:Name="ChannelId" HorizontalAlignment="Left" Height="22" Margin="296,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="AddChannelLabel" Content="Add new channel" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Label x:Name="DeleteChannelLabel" Content="Delete channel" HorizontalAlignment="Left" Margin="266,21,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Label Content="Id" HorizontalAlignment="Left" Margin="296,94,0,0" VerticalAlignment="Top"/>
+        <Label Content="ChannelURL" HorizontalAlignment="Left" Margin="34,139,0,0" VerticalAlignment="Top"/>
+        <Label Content="Channel Name" HorizontalAlignment="Left" Margin="34,74,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="LogoutButton" Style="{StaticResource RoundBlueButtonTemplate}" Content="Logout" HorizontalAlignment="Left" Margin="738,48,0,0" VerticalAlignment="Top" Width="100" Height="42" Click="LogoutButton_Click"/>
+        <Label x:Name="LoginLabel" Content="Signed as: " HorizontalAlignment="Left" Margin="721,10,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <ListView x:Name="ChannelsListView" HorizontalAlignment="Left" Height="136" Margin="438,111,0,0" VerticalAlignment="Top" Width="439">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="40" DisplayMemberBinding="{Binding ChannelId}" />
+                    <GridViewColumn Header="Channel name" Width="90" DisplayMemberBinding="{Binding ChannelName}" />
+                    <GridViewColumn Header="Link" Width="300" DisplayMemberBinding="{Binding Link}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

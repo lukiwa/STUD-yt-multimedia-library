@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="800"
-    Height="873.918"
+    Height="681.918"
     mc:Ignorable="d">
     <Grid>
         <!-- Sign In things-->
@@ -46,6 +46,7 @@
             HorizontalAlignment="Left" 
             Margin="309,546,0,0" 
             VerticalAlignment="Top" 
+            Click="Register_Click"
             Width="136" RenderTransformOrigin="0.5,0.5" Height="52"
             >
             <Button.RenderTransform>

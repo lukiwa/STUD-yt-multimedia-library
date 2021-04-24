@@ -26,6 +26,9 @@ namespace YtMultimediaLibrary {
     /// </summary>
     public partial class MainWindow : Window {
 
+        static readonly YoutubeAPIClient yt = new YoutubeAPIClient("key");
+        static readonly DataBaseContext dbContext = new DataBaseContext();
+        static readonly UserManager manager = new UserManager(yt, dbContext);
 
         public MainWindow()
         {
@@ -35,9 +38,7 @@ namespace YtMultimediaLibrary {
         
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            YoutubeAPIClient yt = new YoutubeAPIClient("key");
-            DataBaseContext dbContext = new DataBaseContext();
-            UserManager manager = new UserManager(yt, dbContext);
+
 
             string email = emailTextBox.Text;
             string password = passwordTextBox.Text;
@@ -49,15 +50,22 @@ namespace YtMultimediaLibrary {
             serviceWindow.Show();
         }
 
-        //private void Register_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string name = nameTextBox.Text;
-        //    string email = newEmailTextBox.Text;
-        //    string password = newPasswordTextBox.Text;
-        //    string confirmedPassword = confirmPasswordTextBox.Text;
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            string name = nameTextBox.Text;
+            string email = newEmailTextBox.Text;
+            string password = newPasswordTextBox.Text;
+            string confirmedPassword = confirmPasswordTextBox.Text;
 
+            if (password == confirmedPassword)
+            {
+                manager.Register(name, email, confirmedPassword);
+                MessageBox.Show("You have account now and you can log in");
+            }
+            else
+                MessageBox.Show("Passwords are not the same!");
 
-        //}
+        }
 
 
     }
