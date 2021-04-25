@@ -15,9 +15,7 @@ namespace YtMultimediaLibrary.Entities
         public string Link { get; set; }
         [Required]
         public string ChannelName { get; set; }
-        [Required]
-        public int UserId { get; set; }
 
-        public List<User> Users { get; set; }
+        public virtual List<User> Users { get; set; }
     }
 }

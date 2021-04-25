@@ -15,7 +15,20 @@ namespace YtMultimediaLibrary.Contexts
             
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Channel> Channels { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Channel> Channels { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            modelBuilder.Entity<User>()
+                .HasMany<Channel>(s => s.Channels)
+                .WithMany(c => c.Users)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("UserRefId");
+                    cs.MapRightKey("ChannelRefId");
+                    cs.ToTable("UserChannels");
+                });
+
+        }
     }
 }

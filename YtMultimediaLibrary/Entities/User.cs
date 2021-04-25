@@ -24,6 +24,6 @@ namespace YtMultimediaLibrary.Entities
         [Required]
         public string PasswordHashed { get; set; }
 
-        public List<Channel> Channels { get; set; }
+        public virtual List<Channel> Channels { get; set; }
     }
 }
