@@ -24,13 +24,13 @@ namespace YtMultimediaLibrary {
         /// <param name="password">Password of the user</param>
         /// <returns>Returns newly created user</returns>
         public User Register(string userName, string email, string password) {
-            var user = _dbContext.Users.Create();
-            user.UserName = userName;
-            user.EMail = email;
-            user.PasswordHashed = password;
+            var user = new User {
+                UserName = userName,
+                EMail = email,
+                PasswordHashed = password
+            };
 
-            if (_dbContext.Users.Any(o => o.UserName == user.UserName || o.EMail == user.EMail))
-            {
+            if (_dbContext.Users.Any(o => o.UserName == user.UserName || o.EMail == user.EMail)) {
                 throw new AuthenticationException("User already exists!");
             }
 
@@ -45,12 +45,10 @@ namespace YtMultimediaLibrary {
         /// <param name="email">Email of the userr</param>
         /// <param name="password">password of the user</param>
         /// <returns>User of this session</returns>
-        public User Login(string email, string password)
-        {
+        public User Login(string email, string password) {
             var currentUser = _dbContext.Users.FirstOrDefault(user => user.EMail == email && user.PasswordHashed == password);
 
-            if (currentUser == null)
-            {
+            if (currentUser == null) {
                 throw new AuthenticationException("User not found in database!");
             }
 
@@ -65,9 +63,11 @@ namespace YtMultimediaLibrary {
         /// <param name="channelLink">Link to a channel</param>
         /// <param name="saveToDb">Save changes to database or not</param>
         public void AddUserChannel(User user, string channelLink, bool saveToDb = true) {
-            var channel = _dbContext.Channels.Create();
-            channel.Link = channelLink;
-            channel.ChannelName = _yt.ChannelDisplayNameByChannelUrl(channelLink);
+            var channel = new Channel {
+                Link = channelLink,
+                ChannelName = _yt.ChannelDisplayNameByChannelUrl(channelLink)
+            };
+
             _dbContext.Channels.Add(channel);
 
             var currentUser = _dbContext.Users.SingleOrDefault(u => u.UserId == user.UserId);
@@ -98,18 +98,6 @@ namespace YtMultimediaLibrary {
         public Channel GetChannelByLink(User user, string channelLink) {
             return user.Channels.FirstOrDefault(channel => channel.Link == channelLink);
         }
-
-        /// <summary>
-        /// From user channel list get channel with ID
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Channel GetChannelById(User user, int id) {
-            return user.Channels.FirstOrDefault(channel => channel.ChannelId == id);
-        }
-
-
 
     }
 }

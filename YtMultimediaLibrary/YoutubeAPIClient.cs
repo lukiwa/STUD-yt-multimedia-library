@@ -19,11 +19,9 @@ namespace YtMultimediaLibrary {
     public class YoutubeAPIClient {
         private Google.Apis.YouTube.v3.YouTubeService _service;
 
-        public YoutubeAPIClient(string apiKey) {
-            _service = new YouTubeService(new BaseClientService.Initializer() {
-                ApiKey = apiKey,
-                ApplicationName = this.GetType().ToString()
-            });
+        public YoutubeAPIClient(YouTubeService service)
+        {
+            _service = service;
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace YtMultimediaLibrary {
 
 
             if (searchListResponse.Items.Any()) {
-                result = searchListResponse.Items[0].Snippet.ChannelTitle;
+                result = searchListResponse.Items.First().Snippet.ChannelTitle;
             }
 
             return result;
