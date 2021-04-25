@@ -50,10 +50,16 @@ namespace YtMultimediaLibrary {
         /// <returns>Display name of a channel</returns>
         public string ChannelDisplayNameByChannelUrl(string channelLink) {
             var result = string.Empty;
+
+            //get one video form given channel and get channel title of this video
             var searchListRequest = _service.Search.List("snippet");
-            searchListRequest.Type = "channels";
+            searchListRequest.MaxResults = 1;
             searchListRequest.ChannelId = ChannelIdByChannelUrl(channelLink);
+            searchListRequest.Type = "video";
+
+
             var searchListResponse = searchListRequest.Execute();
+
 
             if (searchListResponse.Items.Any()) {
                 result = searchListResponse.Items[0].Snippet.ChannelTitle;

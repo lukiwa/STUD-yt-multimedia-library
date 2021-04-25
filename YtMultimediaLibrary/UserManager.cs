@@ -70,7 +70,9 @@ namespace YtMultimediaLibrary {
             channel.ChannelName = _yt.ChannelDisplayNameByChannelUrl(channelLink);
             _dbContext.Channels.Add(channel);
 
-            user.Channels.Add(channel);
+            var currentUser = _dbContext.Users.SingleOrDefault(u => u.UserId == user.UserId);
+            currentUser?.Channels.Add(channel);
+
             if (saveToDb) {
                 _dbContext.SaveChanges();
             }
